@@ -1,9 +1,9 @@
 package org.lessons.java.agency;
 
 
-import static java.math.RoundingMode.HALF_UP;
 import static java.time.temporal.ChronoUnit.DAYS;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -17,7 +17,16 @@ public class Vacanza {
         return listEscursioni;
     }
 
-    public void setListEscursioni(Escursione escursione) {
+    public Vacanza(String destination, LocalDate startDate, LocalDate endDate)throws IllegalArgumentException {
+        this.destination = destination;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        validateDestination(destination);
+        validateStartDate(startDate);
+        validateEndDate(endDate);
+    }
+
+    public void addEscursioni(Escursione escursione) {
         listEscursioni.add(escursione);
     }
 
@@ -26,6 +35,7 @@ public class Vacanza {
     }
 
     public void setDestination(String destination) {
+        validateDestination(destination);
         this.destination = destination;
     }
 
@@ -34,6 +44,7 @@ public class Vacanza {
     }
 
     public void setStartDate(LocalDate startDate) {
+        validateStartDate(startDate);
         this.startDate = startDate;
     }
 
@@ -42,18 +53,11 @@ public class Vacanza {
     }
 
     public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-
-    public Vacanza(String destination, LocalDate startDate, LocalDate endDate)throws IllegalArgumentException {
-        validateDestination(destination);
-        validateStartDate(startDate);
         validateEndDate(endDate);
-        this.destination = destination;
-        this.startDate = startDate;
         this.endDate = endDate;
     }
+
+
 
 
 
@@ -79,8 +83,6 @@ public class Vacanza {
 
     public long totalDays(){
         return DAYS.between(startDate, endDate);
-
-
     }
 
     @Override
@@ -91,7 +93,7 @@ public class Vacanza {
     public BigDecimal totalEscursionPrice(){
         BigDecimal initialPrice = BigDecimal.ZERO;
         for (Escursione element:listEscursioni){
-            initialPrice = initialPrice.add(element.getPrice().setScale(2, HALF_UP));
+            initialPrice = initialPrice.add(element.getPrice()).setScale(2, RoundingMode.HALF_DOWN);
         }
         return initialPrice;
     }

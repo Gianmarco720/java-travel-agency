@@ -3,9 +3,22 @@ package org.lessons.java.agency;
 import java.math.BigDecimal;
 
 public class Escursione {
+
+    // ATTRIBUTI
+
     private String city;
     private int duration;
     private BigDecimal price;
+
+    // COSTRUTTORI
+
+    public Escursione(String city, int duration, BigDecimal price) {
+        this.city = city;
+        this.duration = duration;
+        this.price = price;
+    }
+
+    // GETTER E SETTER
 
     public String getCity() {
         return city;
@@ -31,9 +44,4 @@ public class Escursione {
         this.price = price;
     }
 
-    public Escursione(String city, int duration, BigDecimal price) {
-        this.city = city;
-        this.duration = duration;
-        this.price = price;
-    }
 }
